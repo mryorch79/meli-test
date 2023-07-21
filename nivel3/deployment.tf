@@ -137,14 +137,14 @@ resource "aws_instance" "service" {
     Env         = var.stage
   }
     user_data = <<EOF
-    #!/bin/bash
-    yum update
-    yum install -y docker
-    systemctl start docker
-    systemctl enable docker
-    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${data.aws_caller_identity.current.account_id}.dkr.ecr.us-east-1.amazonaws.com
-    docker pull "${aws_ecr_repository.app_ecr_repo.repository_url}:latest"
-    docker tag "${aws_ecr_repository.app_ecr_repo.repository_url}:latest" service
-    docker run -d -p 7080:7080 service
+#!/bin/bash
+yum update
+yum install -y docker
+systemctl start docker
+systemctl enable docker
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${data.aws_caller_identity.current.account_id}.dkr.ecr.us-east-1.amazonaws.com
+docker pull "${aws_ecr_repository.app_ecr_repo.repository_url}:latest"
+docker tag "${aws_ecr_repository.app_ecr_repo.repository_url}:latest" service
+docker run -d -p 7080:7080 service
     EOF
 }
