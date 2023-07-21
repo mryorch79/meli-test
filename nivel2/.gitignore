@@ -1,0 +1,7 @@
+*
+!.gitignore
+!service.py
+!requirements.txt
+!Dockerfile
+!csv
+!csv/**
